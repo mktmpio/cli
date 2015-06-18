@@ -12,7 +12,9 @@ deploy:
   api_key:
     secure: rJslgkQyH2aJDV31LiCdMle7h5FOukJja/gn0sDQnhLUffrC2Wc7ZGfZ6kTzCeZsBlAp38E2DFO/eQTcsLkh86nzbE1r31/J8Z86Ar7+dBnFMhEHIjMoomR7iPmNk7qGXyIPzBVOVjZqJpoJ1h7x4ncvw1IF3ryx/4MVzlb2gOs7Jx+n2Vydy7kYlK7el69vDbmftgS/lQaG9B31Xd/YvmQgig/unhvQBSyO7YFdBDPyzU0zCbTqwSlkwLaFhK3iDNWXuiwpf2a5FT8nJ+75oQkUpr1W5xF+VGIkKCXQDqHR4ljGs80bCN9OzjQ+Rww9GboXuMhqEdx12M7fnPnkImx8fEb/+I7BOxWA0kMH61CMjWKEbTl44SGaj42UnOXO5EL74NOT1MkmkAuqAZspyjRcpcfwDVjpQWdVtz1R0ZX+M/y0NyB8WswTJEIYYyO3h20JOLqzesgq65HLVLPceZy3tfMkck/7VMJlNFlypqelL2CRqX7YjwNTh+UT11pjy3zSbtq/JODdArkD1R2sw9bO1U2PnkK69RdpcDbORn2mYIRyGrOsaUgEVMOP+37pWPgNb4D7AvY/o1L/O9B8IXx8p185L3ler0SP3ZIYgQ3gVJHZVhI6Pp5INMF+v15IvEijCPVcPWmugshVNlaY6cD2++FVhGl4BQkD71bU7x0=
   file:
-   - mktmpio-v*
+   - mktmpio-v$TRAVIS_TAG-darwin-amd64
+   - mktmpio-v$TRAVIS_TAG-linux-amd64
+   - mktmpio-v$TRAVIS_TAG-windows-amd64.exe
   on:
     tags: true
     repo: mktmpio/mktmpio
