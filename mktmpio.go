@@ -13,6 +13,10 @@ func main() {
 	app.Name = "mktmpio"
 	app.Usage = "create, destroy, and manage mktmpio instances"
 	app.Action = func(c *cli.Context) {
+		if len(c.Args()) < 1 {
+			cli.ShowAppHelp(c)
+			return
+		}
 		err, client := mktmpio.NewClient()
 		err, instance := client.Create(c.Args()[0])
 		if err != nil {
