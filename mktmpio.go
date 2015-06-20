@@ -18,6 +18,10 @@ func main() {
 			return
 		}
 		err, client := mktmpio.NewClient()
+		if err != nil {
+			fmt.Printf("Error creating client: %s\n", err)
+			return
+		}
 		err, instance := client.Create(c.Args()[0])
 		if err != nil {
 			fmt.Printf("Error creating instance: %s\n", err)
