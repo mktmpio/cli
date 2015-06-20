@@ -16,7 +16,7 @@ mktmpio-v$V-windows-x64 mktmpio-v$V-linux-x64 mktmpio-v$V-darwin-x64: README.md
 	cp $< $@
 
 mktmpio-v$V-windows-x64.zip: mktmpio-v$V-windows-x64/mktmpio.exe
-	zip $@ $(basename $@)
+	zip -r $@ $(basename $@)
 
 mktmpio-v$V-linux-x64.tgz: mktmpio-v$V-linux-x64/mktmpio
 	tar -czf $@ $(basename $@)
