@@ -17,19 +17,19 @@ func main() {
 			cli.ShowAppHelp(c)
 			return
 		}
-		err, client := mktmpio.NewClient()
+		client, err := mktmpio.NewClient()
 		if err != nil {
 			fmt.Printf("Error creating client: %s\n", err)
 			return
 		}
-		err, instance := client.Create(c.Args()[0])
+		instance, err := client.Create(c.Args()[0])
 		if err != nil {
 			fmt.Printf("Error creating instance: %s\n", err)
 			return
 		}
 		defer func() {
 			instance.Destroy()
-			fmt.Printf("Instance %s terminated.\n", instance.Id)
+			fmt.Printf("Instance %s terminated.\n", instance.ID)
 		}()
 		_ = instance.LoadEnv()
 		cmd := instance.Cmd()
