@@ -2,8 +2,8 @@ language: go
 go:
  - '1.4.2'
 before_deploy:
-  - make gox
-  - make release
+  - make -f Makefile.rel gox
+  - make -f Makefile.rel release
 deploy:
   provider: releases
   api_key:
