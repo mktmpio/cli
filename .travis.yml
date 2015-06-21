@@ -14,4 +14,4 @@ deploy:
    - mktmpio-v$TRAVIS_TAG-windows-x64.zip
   on:
     tags: true
-    repo: mktmpio/mktmpio
+    repo: mktmpio/cli
