@@ -28,8 +28,11 @@ func main() {
 			return
 		}
 		defer func() {
-			instance.Destroy()
-			fmt.Printf("Instance %s terminated.\n", instance.ID)
+			if err := instance.Destroy(); err != nil {
+				fmt.Printf("Error terminatined instance %s: %v\n", instance.ID, err)
+			} else {
+				fmt.Printf("Instance %s terminated.\n", instance.ID)
+			}
 		}()
 		_ = instance.LoadEnv()
 		cmd := instance.Cmd()
