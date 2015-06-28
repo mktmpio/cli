@@ -93,5 +93,9 @@ func remoteShell(client *mktmpio.Client, instance *mktmpio.Instance) error {
 	defer terminal.Restore(0, oldState)
 	go pipe(os.Stdin, writer)
 	go pipe(reader, os.Stdout)
-	return <-errs
+	err = <-errs
+	if err != io.EOF {
+		return err
+	}
+	return nil
 }
