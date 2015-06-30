@@ -18,19 +18,16 @@ done
 
 shift $(($OPTIND - 1))
 
-version=$1
+if [ ! -z $1 ]; then
+  TAG_MSG="-m '$1'"
+fi
+
+version=$(git describe --tags)
+version=${version%%-*}
+echo $version
 
 # Build array from version string.
-
 a=( ${version//./ } )
-
-# If version string is missing or has the wrong number of members, show usage message.
-
-if [ ${#a[@]} -ne 3 ]
-then
-  echo "usage: $(basename $0) [-Mmp] major.minor.patch"
-  exit 1
-fi
 
 # Increment version numbers as requested.
 
@@ -52,4 +49,4 @@ then
   ((a[2]++))
 fi
 
-echo "${a[0]}.${a[1]}.${a[2]}"
+git tag -a "${a[0]}.${a[1]}.${a[2]}" $TAG_MSG
