@@ -18,13 +18,12 @@ done
 
 shift $(($OPTIND - 1))
 
-if [ ! -z $1 ]; then
-  TAG_MSG="-m '$1'"
-fi
+# if [ ! -z "$1" ]; then
+#   TAG_MSG="-m '$1'"
+# fi
 
 version=$(git describe --tags)
 version=${version%%-*}
-echo $version
 
 # Build array from version string.
 a=( ${version//./ } )
@@ -49,4 +48,7 @@ then
   ((a[2]++))
 fi
 
-git tag -a "${a[0]}.${a[1]}.${a[2]}" $TAG_MSG
+next="${a[0]}.${a[1]}.${a[2]}"
+msg=${1:-$next}
+git tag -a "$next" -m "$msg"
+echo $next
