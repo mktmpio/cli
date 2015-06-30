@@ -3,9 +3,12 @@ PLATFORMS = linux/amd64 windows/amd64 darwin/amd64
 V = $(shell git describe --tags)
 GOFLAGS += -ldflags "-X main.version $V"
 
-mktmpio: ${SRC}
-	go get -t -v ./...
+test: cli
 	go test -v ./...
+	./cli --version
+
+cli: ${SRC}
+	go get -t -v ./...
 	go build ${GOFLAGS}
 
 release: mktmpio-v$V-windows-x64.zip mktmpio-v$V-linux-x64.tgz mktmpio-v$V-darwin-x64.tgz
