@@ -21,24 +21,24 @@ func main() {
 		}
 		client, err := mktmpio.NewClient()
 		if err != nil {
-			fmt.Printf("Error creating client: %s\n", err)
+			fmt.Printf("Error initializing client: %s\n", err)
 			return
 		}
 		instance, err := client.Create(c.Args()[0])
 		if err != nil {
-			fmt.Printf("Error creating instance: %s\n", err)
+			fmt.Printf("Error creating %s instance: %s\n", c.Args()[0], err)
 			return
 		}
 		defer func() {
 			if err := instance.Destroy(); err != nil {
-				fmt.Printf("Error terminatined instance %s: %v\n", instance.ID, err)
+				fmt.Printf("Error terminating %s instance %s: %v\n", instance.Type, instance.ID, err)
 			} else {
 				fmt.Printf("Instance %s terminated.\n", instance.ID)
 			}
 		}()
 		if len(instance.ContainerShell) > 0 {
 			if err = remoteShell(client, instance); err != nil {
-				fmt.Printf("Error running remote shell %s: %v\n", instance.ID, err)
+				fmt.Printf("Error running remote %s shell for %s: %v\n", instance.Type, instance.ID, err)
 			}
 		} else {
 			localShell(instance)
@@ -61,7 +61,7 @@ func localShell(instance *mktmpio.Instance) error {
 		time.Sleep(100 * time.Millisecond)
 	}
 	if err := cmd.Run(); err != nil {
-		fmt.Printf("Error running local shell for %s: %v\n", instance.ID, err)
+		fmt.Printf("Error running local %s shell for %s: %v\n", instance.Type, instance.ID, err)
 		return err
 	}
 	return nil
