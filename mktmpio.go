@@ -10,8 +10,11 @@ import (
 	"time"
 )
 
+var version string
+
 func main() {
 	app := cli.NewApp()
+	app.Version = version
 	app.Name = "mktmpio"
 	app.Usage = "create, destroy, and manage mktmpio instances"
 	app.Action = func(c *cli.Context) {

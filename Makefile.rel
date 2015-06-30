@@ -1,9 +1,10 @@
 SRC = $(wildcard *.go)
 PLATFORMS = linux/amd64 windows/amd64 darwin/amd64
 V = $(shell git describe --tags)
+GOFLAGS += -ldflags "-X main.version $V"
 
 mktmpio: ${SRC}
-	go build
+	go build ${GOFLAGS}
 
 release: mktmpio-v$V-windows-x64.zip mktmpio-v$V-linux-x64.tgz mktmpio-v$V-darwin-x64.tgz
 
@@ -25,10 +26,10 @@ mktmpio-v$V-darwin-x64.tgz: mktmpio-v$V-darwin-x64/mktmpio
 	tar -czf $@ $(basename $@)
 
 mktmpio-v$V-windows-x64/mktmpio.exe: ${SRC} mktmpio-v$V-windows-x64
-	gox -osarch="windows/amd64" -output $(basename $@)
+	gox ${GOFLAGS} -osarch="windows/amd64" -output $(basename $@)
 
 mktmpio-v$V-linux-x64/mktmpio: ${SRC} mktmpio-v$V-linux-x64
-	gox -osarch="linux/amd64" -output $@
+	gox ${GOFLAGS} -osarch="linux/amd64" -output $@
 
 mktmpio-v$V-darwin-x64/mktmpio: ${SRC} mktmpio-v$V-darwin-x64
-	gox -osarch="darwin/amd64" -output $@
+	gox ${GOFLAGS} -osarch="darwin/amd64" -output $@
