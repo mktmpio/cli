@@ -30,11 +30,9 @@ mktmpio-v$V-linux-x64.tgz: mktmpio-v$V-linux-x64/mktmpio
 mktmpio-v$V-darwin-x64.tgz: mktmpio-v$V-darwin-x64/mktmpio
 	tar -czf $@ $(basename $@)
 
-mktmpio-v$V-windows-x64/mktmpio.exe: ${SRC} mktmpio-v$V-windows-x64
-	gox ${GOFLAGS} -osarch="windows/amd64" -output $(basename $@)
+mktmpio-v$V-windows-x64/mktmpio.exe: gox-build
+mktmpio-v$V-linux-x64/mktmpio: gox-build
+mktmpio-v$V-darwin-x64/mktmpio: gox-build
 
-mktmpio-v$V-linux-x64/mktmpio: ${SRC} mktmpio-v$V-linux-x64
-	gox ${GOFLAGS} -osarch="linux/amd64" -output $@
-
-mktmpio-v$V-darwin-x64/mktmpio: ${SRC} mktmpio-v$V-darwin-x64
-	gox ${GOFLAGS} -osarch="darwin/amd64" -output $@
+gox-build: ${SRC} mktmpio-v$V-windows-x64 mktmpio-v$V-linux-x64 mktmpio-v$V-darwin-x64
+	gox ${GOFLAGS} -osarch="windows/amd64 linux/amd64 darwin/amd64" -output "mktmpio-v$V-{{ .OS }}-x64/mktmpio"
