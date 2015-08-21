@@ -27,6 +27,7 @@ func main() {
 			fmt.Printf("Error initializing client: %s\n", err)
 			return
 		}
+		client.UserAgent = fmt.Sprintf("mktmpio-cli/%s (go-mktmpio)", version)
 		instance, err := client.Create(c.Args()[0])
 		if err != nil {
 			fmt.Printf("Error creating %s instance: %s\n", c.Args()[0], err)
