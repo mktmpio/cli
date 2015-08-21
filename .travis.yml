@@ -2,7 +2,7 @@ language: go
 go:
  - '1.5'
 before_deploy:
-  - make gox release
+  - make -j release
 deploy:
   provider: releases
   api_key:
