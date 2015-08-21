@@ -58,8 +58,8 @@ func localShell(instance *mktmpio.Instance) error {
 	cmd.Stdin = os.Stdin
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
-	// MySQL is particularly slow to start up
-	if instance.Type == "mysql" {
+	// some server types are slower than others
+	if t := instance.Type; t == "mysql" || t == "couchdb" {
 		time.Sleep(500 * time.Millisecond)
 	} else {
 		time.Sleep(100 * time.Millisecond)
