@@ -22,7 +22,8 @@ func main() {
 			cli.ShowAppHelp(c)
 			return
 		}
-		client, err := mktmpio.NewClient()
+		cfg := mktmpio.LoadConfig()
+		client, err := mktmpio.NewClient(cfg)
 		if err != nil {
 			fmt.Printf("Error initializing client: %s\n", err)
 			return
@@ -72,7 +73,7 @@ func localShell(instance *mktmpio.Instance) error {
 }
 
 func remoteShell(client *mktmpio.Client, instance *mktmpio.Instance) error {
-	reader, writer, err := client.Attach(instance.ID)
+	conn, err := client.Attach(instance.ID)
 	errs := make(chan error)
 	pipe := func(r io.Reader, w io.Writer) {
 		buf := make([]byte, 128)
@@ -95,8 +96,8 @@ func remoteShell(client *mktmpio.Client, instance *mktmpio.Instance) error {
 		panic(err)
 	}
 	defer terminal.Restore(0, oldState)
-	go pipe(os.Stdin, writer)
-	go pipe(reader, os.Stdout)
+	go pipe(os.Stdin, conn)
+	go pipe(conn, os.Stdout)
 	err = <-errs
 	if err != io.EOF {
 		return err
