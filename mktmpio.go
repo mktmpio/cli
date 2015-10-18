@@ -6,7 +6,7 @@ import (
 	"os"
 )
 
-var version string
+var version = "HEAD"
 
 func main() {
 	app := cli.NewApp()
