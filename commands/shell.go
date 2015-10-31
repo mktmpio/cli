@@ -72,35 +72,26 @@ func localShell(instance *mktmpio.Instance) error {
 	return nil
 }
 
+func pipe(r io.Reader, w io.Writer, c chan<- error) {
+	_, err := io.Copy(w, r)
+	c <- err
+}
+
 func remoteShell(client *mktmpio.Client, instance *mktmpio.Instance) error {
 	conn, err := client.Attach(instance.ID)
-	errs := make(chan error)
-	pipe := func(r io.Reader, w io.Writer) {
-		buf := make([]byte, 128)
-		for {
-			n, err := r.Read(buf)
-			if n > 0 {
-				w.Write(buf[:n])
-			}
-			if err != nil {
-				errs <- err
-				return
-			}
+	if err != nil {
+		return err
+	}
+	// Only do raw TTY mode if all of stdio is attached to a TTY
+	if terminal.IsTerminal(0) && terminal.IsTerminal(1) && terminal.IsTerminal(2) {
+		if oldState, err := terminal.MakeRaw(0); err != nil {
+			panic(err)
+		} else {
+			defer terminal.Restore(0, oldState)
 		}
 	}
-	if err != nil {
-		return err
-	}
-	oldState, err := terminal.MakeRaw(0)
-	if err != nil {
-		panic(err)
-	}
-	defer terminal.Restore(0, oldState)
-	go pipe(os.Stdin, conn)
-	go pipe(conn, os.Stdout)
-	err = <-errs
-	if err != io.EOF {
-		return err
-	}
-	return nil
+	errs := make(chan error)
+	go pipe(os.Stdin, conn, errs)
+	go pipe(conn, os.Stdout, errs)
+	return <-errs
 }
