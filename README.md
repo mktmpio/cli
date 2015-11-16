@@ -46,6 +46,19 @@ Instance 3b9f136893da terminated.
 $
 ```
 
+## Development
+
+### Release Procedure
+
+1. create an annotated release tag, following SemVer
+  * major: `./version.sh -M`
+  * minor: `./version.sh -m`
+  * patch: `./version.sh -p`
+2. push tag to github
+  * tags trigger release builds on Travis
+  * can be manually run with `make release`
+  * release binaries are uploaded to GitHub release automatically
+
 ## Legal
 
 Use of the mktmpio service is subject to the
