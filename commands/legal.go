@@ -23,6 +23,10 @@ This binary includes 3rd party software:
    MIT license
    Copyright (C) 2013 Jeremy Saenz
 
+ * github.com/docker/docker/pkg/stdcopy
+   Apache License 2.0
+   Copyright 2013-2015 Docker, Inc.
+
  * github.com/mitchellh/go-homedir
    MIT license
    Copyright (c) 2013 Mitchell Hashimoto
@@ -39,6 +43,10 @@ This binary includes 3rd party software:
  * gopkg.in/yaml.v2
    LGPL3 license
    Copyright (c) 2011-2014 - Canonical Inc.
+
+ * github.com/Sirupsen/logrus
+   MIT License
+   Copyright (c) 2014 Simon Eskildsen
 `
 
 // This software is provided "AS IS"
