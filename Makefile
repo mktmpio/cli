@@ -1,6 +1,6 @@
-SRC = $(wildcard *.go)
-V = $(shell git describe --tags)
-T = $(shell date -u +%Y-%m-%dT%H:%M:%SZ)
+SRC = $(wildcard *.go */*.go)
+V := $(shell git describe --tags)
+T := $(shell date -u +%Y-%m-%dT%H:%M:%SZ)
 GOFLAGS += -ldflags "-X main.version=$V -X main.buildtime=$T"
 
 test: cli
