@@ -3,7 +3,7 @@ V := $(shell git describe --tags)
 T := $(shell date -u +%Y-%m-%dT%H:%M:%SZ)
 GOFLAGS += -ldflags "-X main.version=$V -X main.buildtime=$T"
 
-OSES := darwin linux windows
+OSES ?= darwin linux windows
 darwin_ARCH := 386 amd64
 linux_ARCH := 386 amd64
 windows_ARCH := 386 amd64
@@ -24,12 +24,6 @@ $(eval BINARIES += $(3)/mktmpio$($(1)_EXT))
 $(eval DIRS += $(3))
 endef
 
-test: cli get $(BINARIES)
-	go test -v ./...
-	./cli help
-	./cli legal
-	./cli --version
-
 # Generate targets and variables for all the supported OS/ARCH combinations
 $(foreach os,$(OSES), \
 	$(foreach arch,$($(os)_ARCH), \
@@ -38,6 +32,12 @@ $(foreach os,$(OSES), \
 		) \
 	) \
 )
+
+test: cli get $(BINARIES)
+	go test -v ./...
+	./cli help
+	./cli legal
+	./cli --version
 
 get:
 	go get -t -v ./...

@@ -1,6 +1,10 @@
 language: go
 go:
  - '1.5'
+env:
+ - OSES=linux
+ - OSES=darwin
+ - OSES=windows
 script:
   - make -j $(getconf _NPROCESSORS_ONLN) test
 before_deploy:
