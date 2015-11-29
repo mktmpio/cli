@@ -3,9 +3,39 @@ V := $(shell git describe --tags)
 T := $(shell date -u +%Y-%m-%dT%H:%M:%SZ)
 GOFLAGS += -ldflags "-X main.version=$V -X main.buildtime=$T"
 
+OSES := darwin linux windows
+darwin_ARCH := 386 amd64
+linux_ARCH := 386 amd64
+windows_ARCH := 386 amd64
+windows_EXT := .exe
+windows_TGZ := zip
+default_TGZ := tgz
+NAME_386 := x86
+NAME_amd64 := x64
+
+name = mktmpio-v$(V)-$(1)-$(firstword $(NAME_$(2)) $(2))
+define build_t
+$(3)/mktmpio$($(1)_EXT): $(3)
+$(3)/mktmpio$($(1)_EXT): GOOS=$(1)
+$(3)/mktmpio$($(1)_EXT): GOARCH=$(2)
+$(3).$(firstword $($(1)_TGZ) $(default_TGZ)): $(3)/mktmpio$($(1)_EXT)
+$(eval TARBALLS += $(3).$(firstword $($(1)_TGZ) $(default_TGZ)))
+$(eval BINARIES += $(3)/mktmpio$($(1)_EXT))
+$(eval DIRS += $(3))
+endef
+
 test: cli
 	go test -v ./...
 	./cli --version
+
+# Generate targets and variables for all the supported OS/ARCH combinations
+$(foreach os,$(OSES), \
+	$(foreach arch,$($(os)_ARCH), \
+		$(eval \
+			$(call build_t,$(os),$(arch),$(call name,$(os),$(arch))) \
+		) \
+	) \
+)
 
 get:
 	go get -t -v ./...
@@ -14,52 +44,18 @@ cli: get
 cli: ${SRC}
 	go build ${GOFLAGS}
 
-release: mktmpio-v$V-windows-x64.zip mktmpio-v$V-linux-x64.tgz mktmpio-v$V-darwin-x64.tgz
-release: mktmpio-v$V-windows-x86.zip mktmpio-v$V-linux-x86.tgz mktmpio-v$V-darwin-x86.tgz
+release: $(TARBALLS)
 
-mktmpio-v$V-windows-x64 mktmpio-v$V-linux-x64 mktmpio-v$V-darwin-x64 mktmpio-v$V-windows-x86 mktmpio-v$V-linux-x86 mktmpio-v$V-darwin-x86: README.md
+# All binaries are built using the same recipe
+$(BINARIES): ${SRC} | get
+	GOOS=$(GOOS) GOARCH=$(GOARCH) go build -o $@ $(GOFLAGS) mktmpio.go
+
+$(DIRS): README.md
 	mkdir -p $@
 	cp $< $@
 
-mktmpio-v$V-windows-x64/mktmpio.exe: get
-mktmpio-v$V-windows-x86/mktmpio.exe: get
-mktmpio-v$V-linux-x64/mktmpio: get
-mktmpio-v$V-linux-x86/mktmpio: get
-mktmpio-v$V-darwin-x64/mktmpio: get
-mktmpio-v$V-darwin-x86/mktmpio: get
-
-mktmpio-v$V-windows-x64.zip: mktmpio-v$V-windows-x64/mktmpio.exe
-	zip -r $@ $(basename $@)
-
-mktmpio-v$V-windows-x86.zip: mktmpio-v$V-windows-x86/mktmpio.exe
-	zip -r $@ $(basename $@)
-
-mktmpio-v$V-linux-x64.tgz: mktmpio-v$V-linux-x64/mktmpio
-	tar -czf $@ $(basename $@)
-
-mktmpio-v$V-linux-x86.tgz: mktmpio-v$V-linux-x86/mktmpio
-	tar -czf $@ $(basename $@)
-
-mktmpio-v$V-darwin-x64.tgz: mktmpio-v$V-darwin-x64/mktmpio
-	tar -czf $@ $(basename $@)
-
-mktmpio-v$V-darwin-x86.tgz: mktmpio-v$V-darwin-x86/mktmpio
-	tar -czf $@ $(basename $@)
-
-mktmpio-v$V-windows-x64/mktmpio.exe: ${SRC}
-	GOOS=windows GOARCH=amd64 go build -o $@ ${GOFLAGS} $<
-
-mktmpio-v$V-windows-x86/mktmpio.exe: ${SRC}
-	GOOS=windows GOARCH=386 go build -o $@ ${GOFLAGS} $<
-
-mktmpio-v$V-linux-x64/mktmpio: ${SRC}
-	GOOS=linux GOARCH=amd64 go build -o $@ ${GOFLAGS} $<
-
-mktmpio-v$V-linux-x86/mktmpio: ${SRC}
-	GOOS=linux GOARCH=386 go build -o $@ ${GOFLAGS} $<
-
-mktmpio-v$V-darwin-x64/mktmpio: ${SRC}
-	GOOS=darwin GOARCH=amd64 go build -o $@ ${GOFLAGS} $<
-
-mktmpio-v$V-darwin-x86/mktmpio: ${SRC}
-	GOOS=darwin GOARCH=386 go build -o $@ ${GOFLAGS} $<
+# How to build an archive from a directory
+%.zip : %
+	zip -r $@ $<
+%.tgz : %
+	tar -czf $@ $<
