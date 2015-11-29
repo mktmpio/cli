@@ -1,8 +1,10 @@
 language: go
 go:
  - '1.5'
+script:
+  - make -j $(getconf _NPROCESSORS_ONLN) test
 before_deploy:
-  - make -j release
+  - make -j $(getconf _NPROCESSORS_ONLN) release
 deploy:
   provider: releases
   api_key:

@@ -24,8 +24,10 @@ $(eval BINARIES += $(3)/mktmpio$($(1)_EXT))
 $(eval DIRS += $(3))
 endef
 
-test: cli
+test: cli get $(BINARIES)
 	go test -v ./...
+	./cli help
+	./cli legal
 	./cli --version
 
 # Generate targets and variables for all the supported OS/ARCH combinations
@@ -40,11 +42,11 @@ $(foreach os,$(OSES), \
 get:
 	go get -t -v ./...
 
-cli: get
+cli: | get
 cli: ${SRC}
 	go build ${GOFLAGS}
 
-release: $(TARBALLS)
+release: get $(TARBALLS)
 
 # All binaries are built using the same recipe
 $(BINARIES): ${SRC} | get
