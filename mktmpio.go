@@ -55,6 +55,7 @@ func mktmpioApp() *cli.App {
 		Copyright:    "Copyright 2015 Datajin Technologies, Inc.",
 		BashComplete: cli.DefaultAppComplete,
 		Action:       commands.ShellCommand.Action,
+		Before:       commands.PopulateConfig,
 		Writer:       os.Stdout,
 		Commands: []cli.Command{
 			commands.ShellCommand,
@@ -65,11 +66,13 @@ func mktmpioApp() *cli.App {
 				Name:   "token",
 				Usage:  "API token for making requests to mktmpio service",
 				EnvVar: "MKTMPIO_TOKEN",
+				Value:  "TOKEN",
 			},
 			cli.StringFlag{
 				Name:   "url",
 				Usage:  "override the URL for the mktmpio service",
 				EnvVar: "MKTMPIO_URL",
+				Value:  "URL",
 			},
 		},
 		Authors: []cli.Author{

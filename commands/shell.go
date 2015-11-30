@@ -26,8 +26,7 @@ func shellAction(c *cli.Context) {
 		cli.ShowAppHelp(c)
 		return
 	}
-	cfg := mktmpio.LoadConfig()
-	client, err := mktmpio.NewClient(cfg)
+	client, err := mktmpio.NewClient(Config)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error initializing client: %s\n", err)
 		return
