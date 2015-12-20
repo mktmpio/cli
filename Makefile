@@ -52,9 +52,9 @@ release: get $(TARBALLS)
 $(BINARIES): ${SRC} | get
 	GOOS=$(GOOS) GOARCH=$(GOARCH) go build -o $@ $(GOFLAGS) mktmpio.go
 
-$(DIRS): README.md
+$(DIRS): README.md LICENSE
 	mkdir -p $@
-	cp $< $@
+	cp $^ $@
 
 # How to build an archive from a directory
 %.zip : %

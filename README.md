@@ -61,6 +61,9 @@ $
 
 ## Legal
 
+This software is &copy; 2015 Datajin Technologies, Inc. and Open Source under
+the terms of Artistic License 2.0 that can be found in the LICENSE file.
+
 Use of the mktmpio service is subject to the
 [mktmpio Privacy Policy](https://mktmp.io/privacy-policy) and
 [mktmpio Terms of Service policy](https://mktmp.io/terms-of-service).
