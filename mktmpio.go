@@ -85,5 +85,5 @@ func mktmpioApp() *cli.App {
 }
 
 func main() {
-	mktmpioApp().Run(os.Args)
+	mktmpioApp().RunAndExitOnError()
 }
