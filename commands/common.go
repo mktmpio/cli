@@ -5,12 +5,14 @@
 package commands
 
 import (
+	"fmt"
 	"github.com/codegangsta/cli"
 	"github.com/mktmpio/go-mktmpio"
 )
 
 // Config stores the shared mktmpio config used by all the cli commands
 var Config = mktmpio.LoadConfig()
+var client *mktmpio.Client
 
 // PopulateConfig populates the shared config used by all the cli commands.
 func PopulateConfig(c *cli.Context) error {
@@ -21,4 +23,15 @@ func PopulateConfig(c *cli.Context) error {
 		Config.URL = c.GlobalString("url")
 	}
 	return nil
+}
+
+// InitializeClient returns an error if the shared client is not valid
+func InitializeClient(c *cli.Context) error {
+	client, err := mktmpio.NewClient(Config)
+	if err != nil {
+		fmt.Fprintf(c.App.Writer, "Error initializing client: %s\n", err)
+	} else {
+		client.UserAgent = "mktmpio-cli/" + c.App.Version + " (go-mktmpio)"
+	}
+	return err
 }

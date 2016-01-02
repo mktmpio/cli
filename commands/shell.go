@@ -19,6 +19,7 @@ import (
 var ShellCommand = cli.Command{
 	Name:   "shell",
 	Usage:  "create a new server and attach a shell session to it",
+	Before: InitializeClient,
 	Action: shellAction,
 }
 
@@ -28,12 +29,6 @@ func shellAction(c *cli.Context) {
 		cli.ShowAppHelp(c)
 		return
 	}
-	client, err := mktmpio.NewClient(Config)
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error initializing client: %s\n", err)
-		return
-	}
-	client.UserAgent = fmt.Sprintf("mktmpio-cli/%s (go-mktmpio)", c.App.Version)
 	instance, err := client.Create(c.Args()[0])
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error creating %s instance: %s\n", c.Args()[0], err)
