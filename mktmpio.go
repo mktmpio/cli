@@ -62,6 +62,7 @@ func mktmpioApp() *cli.App {
 		Commands: []cli.Command{
 			commands.ConfigCommand,
 			commands.ListCommand,
+			commands.RemoveCommand,
 			commands.ShellCommand,
 			commands.LegalCommand,
 		},
