@@ -12,7 +12,6 @@ import (
 
 // Config stores the shared mktmpio config used by all the cli commands
 var Config = mktmpio.LoadConfig()
-var client *mktmpio.Client
 
 // PopulateConfig populates the shared config used by all the cli commands.
 func PopulateConfig(c *cli.Context) error {
@@ -25,13 +24,18 @@ func PopulateConfig(c *cli.Context) error {
 	return nil
 }
 
+var (
+	client    *mktmpio.Client
+	clientErr error
+)
+
 // InitializeClient returns an error if the shared client is not valid
 func InitializeClient(c *cli.Context) error {
-	client, err := mktmpio.NewClient(Config)
-	if err != nil {
-		fmt.Fprintf(c.App.Writer, "Error initializing client: %s\n", err)
+	client, clientErr = mktmpio.NewClient(Config)
+	if clientErr != nil {
+		fmt.Fprintf(c.App.Writer, "Error initializing client: %s\n", clientErr)
 	} else {
 		client.UserAgent = "mktmpio-cli/" + c.App.Version + " (go-mktmpio)"
 	}
-	return err
+	return clientErr
 }
