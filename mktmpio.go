@@ -61,6 +61,7 @@ func mktmpioApp() *cli.App {
 		Writer:       os.Stdout,
 		Commands: []cli.Command{
 			commands.ConfigCommand,
+			commands.ListCommand,
 			commands.ShellCommand,
 			commands.LegalCommand,
 		},
