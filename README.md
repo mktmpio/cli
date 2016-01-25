@@ -48,6 +48,14 @@ $
 
 ## Development
 
+### Build
+
+1. `git clone git@github.com:mktmpio/cli.git $GOPATH/github.com/mktmpio/cli`
+2. `cd $GOPATH/github.com/mktmpio/cli`
+3. `go get -u -v -t ./...`
+4. `go build -v`
+5. You should now be able to run `mktmpio` as `./cli`
+
 ### Release Procedure
 
 1. create an annotated release tag, following SemVer
