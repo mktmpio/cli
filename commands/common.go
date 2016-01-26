@@ -38,6 +38,7 @@ func PopulateConfig(c *cli.Context) error {
 		fmt.Fprintf(c.App.Writer, "Error initializing client: %s\n", clientErr)
 	} else {
 		client.UserAgent = "mktmpio-cli/" + c.App.Version + " (go-mktmpio)"
+		client.SetLogger(logger)
 	}
 	logger.Printf("Initialized: %+v", client)
 	return clientErr
