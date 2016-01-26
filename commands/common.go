@@ -8,34 +8,37 @@ import (
 	"fmt"
 	"github.com/codegangsta/cli"
 	"github.com/mktmpio/go-mktmpio"
+	"io/ioutil"
+	"log"
 )
 
 // Config stores the shared mktmpio config used by all the cli commands
 var Config = mktmpio.LoadConfig()
 
+var (
+	client    *mktmpio.Client
+	clientErr error
+	logger    = log.New(ioutil.Discard, "", log.LUTC|log.Lshortfile|log.Ldate|log.Ltime)
+)
+
 // PopulateConfig populates the shared config used by all the cli commands.
 func PopulateConfig(c *cli.Context) error {
+	if c.GlobalBool("debug") {
+		logger.SetOutput(c.App.Writer)
+	}
 	if c.GlobalIsSet("token") {
 		Config.Token = c.GlobalString("token")
 	}
 	if c.GlobalIsSet("url") {
 		Config.URL = c.GlobalString("url")
 	}
-	return nil
-}
-
-var (
-	client    *mktmpio.Client
-	clientErr error
-)
-
-// InitializeClient returns an error if the shared client is not valid
-func InitializeClient(c *cli.Context) error {
+	logger.Printf("loaded config: %v", Config)
 	client, clientErr = mktmpio.NewClient(Config)
 	if clientErr != nil {
 		fmt.Fprintf(c.App.Writer, "Error initializing client: %s\n", clientErr)
 	} else {
 		client.UserAgent = "mktmpio-cli/" + c.App.Version + " (go-mktmpio)"
 	}
+	logger.Printf("Initialized: %+v", client)
 	return clientErr
 }

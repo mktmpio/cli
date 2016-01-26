@@ -15,7 +15,6 @@ import (
 var RemoveCommand = cli.Command{
 	Name:   "rm",
 	Usage:  "shutdown running database servers",
-	Before: InitializeClient,
 	Action: rmAction,
 }
 

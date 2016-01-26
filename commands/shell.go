@@ -19,7 +19,6 @@ import (
 var ShellCommand = cli.Command{
 	Name:   "shell",
 	Usage:  "create a new server and attach a shell session to it",
-	Before: InitializeClient,
 	Action: shellAction,
 }
 

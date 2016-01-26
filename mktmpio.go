@@ -67,6 +67,11 @@ func mktmpioApp() *cli.App {
 			commands.LegalCommand,
 		},
 		Flags: []cli.Flag{
+			cli.BoolFlag{
+				Name:   "debug, d",
+				Usage:  "Enable extra verbose logging",
+				EnvVar: "MKTMPIO_DEBUG",
+			},
 			cli.StringFlag{
 				Name:   "token",
 				Usage:  "API token for making requests to mktmpio service",

@@ -39,7 +39,6 @@ var ListCommand = cli.Command{
 	Name:   "ls",
 	Usage:  "list and inspect running database servers",
 	Action: lsAction,
-	Before: InitializeClient,
 	Flags: []cli.Flag{
 		cli.BoolFlag{Name: "long, l"},
 	},
