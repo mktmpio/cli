@@ -24,13 +24,18 @@ const appHelpTemplate = `NAME:
    {{.Name}} - {{.Usage}}
 
 USAGE:
-   {{.HelpName}} {{if .Flags}}[global options]{{end}}{{if .Commands}} command [command options]{{end}} {{if .ArgsUsage}}{{.ArgsUsage}}{{else}}[arguments...]{{end}}
+   {{.HelpName}}
+   {{- if .Flags }} [global options] {{- end -}}
+   {{- if .Commands}} command [command options] {{- end -}}
+   {{- if .ArgsUsage}} {{.ArgsUsage}} {{- else }} [arguments...] {{- end}}
 
 GLOBAL OPTIONS:
-   {{range .Flags}}{{.}}
+   {{range .Flags}}
+     {{- .}}
    {{end}}
 COMMANDS:
-   {{range .Commands}}{{join .Names ", "}}{{ "\t" }}{{.Usage}}
+   {{range .Commands}}
+     {{- join .Names ", "}}{{ "\t" }}{{.Usage}}
    {{end}}
 BUGS:
    Report to https://github.com/mktmpio/cli/issues
