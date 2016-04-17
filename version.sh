@@ -50,5 +50,5 @@ fi
 
 next="${a[0]}.${a[1]}.${a[2]}"
 msg=${1:-$next}
-git tag -a "$next" -m "$msg"
+git tag -s -a "$next" -m "$msg"
 echo $next
