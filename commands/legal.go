@@ -1,4 +1,4 @@
-// Copyright 2015 Datajin Technologies, Inc. All rights reserved.
+// Copyright Datajin Technologies, Inc. 2015,2016. All rights reserved.
 // Use of this source code is governed by an Artistic-2
 // license that can be found in the LICENSE file.
 
@@ -7,12 +7,13 @@ package commands
 import "github.com/codegangsta/cli"
 
 const artisticShort = `
+Copyright Datajin Technologies, Inc. 2015,2016. All rights reserved.
 This software is released under the Artistic License 2.0.
 `
 const artisticFull = `
                The Artistic License 2.0
 
-           Copyright (c) 2015 mktmp.io
+           Copyright (c) 2000-2006, The Perl Foundation.
 
      Everyone is permitted to copy and distribute verbatim copies
       of this license document, but changing it is not allowed.
