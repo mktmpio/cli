@@ -6,12 +6,13 @@ package commands
 
 import (
 	"fmt"
-	"github.com/codegangsta/cli"
 	"os"
 	"sync"
+
+	"github.com/codegangsta/cli"
 )
 
-// Definition for the 'mktmpio shell' command
+// RemoveCommand defines the 'mktmpio shell' command
 var RemoveCommand = cli.Command{
 	Name:   "rm",
 	Usage:  "shutdown running database servers",

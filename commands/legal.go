@@ -292,7 +292,7 @@ This is only a summary. For full warranty and license texts as well as the
 complete listing of included 3rd party software, run with the --verbose flag.
 `
 
-// Definition for the 'mktmpio config' command
+// LegalCommand defines the 'mktmpio config' command
 var LegalCommand = cli.Command{
 	Name:   "legal",
 	Usage:  "display licensing, copyright, and warranty notices",

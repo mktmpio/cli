@@ -5,11 +5,12 @@
 package main
 
 import (
-	"github.com/codegangsta/cli"
-	"github.com/mktmpio/cli/commands"
 	"os"
 	"path"
 	"time"
+
+	"github.com/codegangsta/cli"
+	"github.com/mktmpio/cli/commands"
 )
 
 // overriden at compile time (-ldflags "-X main.version=V main.commit=C")

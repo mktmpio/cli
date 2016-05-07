@@ -6,10 +6,11 @@ package commands
 
 import (
 	"fmt"
-	"github.com/codegangsta/cli"
-	"github.com/mktmpio/go-mktmpio"
 	"io/ioutil"
 	"log"
+
+	"github.com/codegangsta/cli"
+	"github.com/mktmpio/go-mktmpio"
 )
 
 // Config stores the shared mktmpio config used by all the cli commands

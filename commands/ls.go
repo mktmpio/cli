@@ -6,10 +6,11 @@ package commands
 
 import (
 	"fmt"
-	"github.com/codegangsta/cli"
 	"os"
 	"path"
 	"text/template"
+
+	"github.com/codegangsta/cli"
 )
 
 const shortInstanceListTemplate = `{{range .}}{{.ID}}
@@ -34,7 +35,7 @@ func padColumnNarrow(v interface{}) string {
 	return fmt.Sprintf("%-8v", v)
 }
 
-// Definition for the 'mktmpio shell' command
+// ListCommand defines the 'mktmpio shell' command
 var ListCommand = cli.Command{
 	Name:   "ls",
 	Usage:  "list and inspect running database servers",

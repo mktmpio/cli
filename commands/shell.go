@@ -6,16 +6,17 @@ package commands
 
 import (
 	"fmt"
-	"github.com/codegangsta/cli"
-	"github.com/mktmpio/go-mktmpio"
-	"golang.org/x/crypto/ssh/terminal"
 	"io"
 	"os"
 	"sync"
 	"time"
+
+	"github.com/codegangsta/cli"
+	"github.com/mktmpio/go-mktmpio"
+	"golang.org/x/crypto/ssh/terminal"
 )
 
-// Definition for the 'mktmpio shell' command
+// ShellCommand defines the 'mktmpio shell' command
 var ShellCommand = cli.Command{
 	Name:   "shell",
 	Usage:  "create a new server and attach a shell session to it",

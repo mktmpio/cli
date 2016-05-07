@@ -5,23 +5,24 @@
 package commands
 
 import (
+	"strings"
+
 	"github.com/codegangsta/cli"
 	"github.com/mktmpio/go-mktmpio"
-	"strings"
 )
 
-// Definition for the 'mktmpio config' command
+// ConfigCommand is the definition for the 'mktmpio config' command
 var ConfigCommand = cli.Command{
 	Name:  "config",
 	Usage: "view and modify your mktmpio config",
 	Subcommands: []cli.Command{
-		cli.Command{
+		{
 			Name:      "get",
 			Usage:     "view config values",
 			ArgsUsage: "[NAMES...]",
 			Action:    getConfigs,
 		},
-		cli.Command{
+		{
 			Name:      "set",
 			Usage:     "set config values",
 			ArgsUsage: "<NAME> <VALUE>..., to unset a value use an empty string as the value",
