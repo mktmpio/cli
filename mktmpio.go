@@ -7,6 +7,7 @@ package main
 import (
 	"os"
 	"path"
+	"runtime"
 	"time"
 
 	"github.com/codegangsta/cli"
@@ -58,7 +59,7 @@ func mktmpioApp() *cli.App {
 		Name:         "mktmpio",
 		HelpName:     path.Base(os.Args[0]),
 		Usage:        "create, destroy, and manage mktmpio database servers",
-		Version:      version,
+		Version:      version + " (built with " + runtime.Compiler + ", " + runtime.Version() + ")",
 		Compiled:     t,
 		Copyright:    "Copyright Datajin Technologies, Inc. 2015,2016. All rights reserved.",
 		BashComplete: cli.DefaultAppComplete,
