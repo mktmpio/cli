@@ -10,7 +10,7 @@ import (
 	"path"
 	"text/template"
 
-	"github.com/codegangsta/cli"
+	"github.com/urfave/cli"
 )
 
 const shortInstanceListTemplate = `{{range .}}{{.ID}}

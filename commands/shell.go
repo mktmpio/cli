@@ -11,8 +11,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/codegangsta/cli"
 	"github.com/mktmpio/go-mktmpio"
+	"github.com/urfave/cli"
 	"golang.org/x/crypto/ssh/terminal"
 )
 

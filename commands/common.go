@@ -9,8 +9,8 @@ import (
 	"io/ioutil"
 	"log"
 
-	"github.com/codegangsta/cli"
 	"github.com/mktmpio/go-mktmpio"
+	"github.com/urfave/cli"
 )
 
 // Config stores the shared mktmpio config used by all the cli commands

@@ -7,8 +7,8 @@ package commands
 import (
 	"strings"
 
-	"github.com/codegangsta/cli"
 	"github.com/mktmpio/go-mktmpio"
+	"github.com/urfave/cli"
 )
 
 // ConfigCommand is the definition for the 'mktmpio config' command

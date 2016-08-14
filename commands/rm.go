@@ -9,7 +9,7 @@ import (
 	"os"
 	"sync"
 
-	"github.com/codegangsta/cli"
+	"github.com/urfave/cli"
 )
 
 // RemoveCommand defines the 'mktmpio shell' command

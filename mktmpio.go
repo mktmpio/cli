@@ -10,8 +10,8 @@ import (
 	"runtime"
 	"time"
 
-	"github.com/codegangsta/cli"
 	"github.com/mktmpio/cli/commands"
+	"github.com/urfave/cli"
 )
 
 // overriden at compile time (-ldflags "-X main.version=V main.commit=C")
@@ -51,7 +51,7 @@ COPYRIGHT:
 `
 
 func mktmpioApp() *cli.App {
-	// overrides for some variables exposed by codegangsta/cli
+	// overrides for some variables exposed by urfave/cli
 	cli.AppHelpTemplate = appHelpTemplate
 	cli.VersionFlag.Name = "version"
 	cli.HelpFlag.Name = "help"

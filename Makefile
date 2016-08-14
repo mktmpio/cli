@@ -33,7 +33,7 @@ $(foreach os,$(OSES), \
 	) \
 )
 
-test: cli get $(BINARIES)
+test: cli $(BINARIES)
 	go test -v ./...
 	./cli help
 	./cli legal
@@ -42,14 +42,13 @@ test: cli get $(BINARIES)
 get:
 	go get -t -v ./...
 
-cli: | get
 cli: ${SRC}
 	go build ${GOFLAGS}
 
-release: get $(TARBALLS)
+release: $(TARBALLS)
 
 # All binaries are built using the same recipe
-$(BINARIES): ${SRC} | get
+$(BINARIES): ${SRC}
 	GOOS=$(GOOS) GOARCH=$(GOARCH) go build -o $@ $(GOFLAGS) mktmpio.go
 
 $(DIRS): README.md LICENSE
