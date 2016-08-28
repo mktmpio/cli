@@ -1,4 +1,5 @@
 SRC = $(wildcard *.go */*.go)
+Q ?= @
 V := $(shell git describe --tags)
 T := $(shell date -u +%Y-%m-%dT%H:%M:%SZ)
 GOFLAGS += -ldflags "-X main.version=$V -X main.buildtime=$T"
@@ -12,6 +13,8 @@ windows_TGZ := zip
 default_TGZ := tgz
 NAME_386 := x86
 NAME_amd64 := x64
+
+default: quicktest
 
 name = mktmpio-v$(V)-$(1)-$(firstword $(NAME_$(2)) $(2))
 define build_t
@@ -33,17 +36,21 @@ $(foreach os,$(OSES), \
 	) \
 )
 
-test: cli $(BINARIES)
-	go test -v ./...
-	./cli help
-	./cli legal
-	./cli --version
+test: Q =
+test: quicktest $(BINARIES)
+
+quicktest: cli
+	$Q go test ./commands && echo "ok - test"
+	$Q ./cli help | grep -q "mktmpio" && echo "ok - help"
+	$Q ./cli legal | grep -q "Artistic" && echo "ok - legal"
+	$Q ./cli --version | grep -q "mktmpio" && echo "ok - version"
+	$Q echo "ok"
 
 get:
 	go get -t -v ./...
 
 cli: ${SRC}
-	go build ${GOFLAGS}
+	$Q go build ${GOFLAGS}
 
 release: $(TARBALLS)
 
