@@ -232,14 +232,6 @@ This binary includes 3rd party open source software.
 const thirdpartyFull = `
 This binary includes 3rd party software:
 
- * github.com/urfave/cli
-   MIT license
-   Copyright (C) 2016 Jeremy Saenz & Contributors
-
- * github.com/docker/docker/pkg/stdcopy
-   Apache License 2.0
-   Copyright 2013-2015 Docker, Inc.
-
  * github.com/mitchellh/go-homedir
    MIT license
    Copyright (c) 2013 Mitchell Hashimoto
@@ -247,6 +239,14 @@ This binary includes 3rd party software:
  * github.com/mktmpio/go-mktmpio
    Artistic-2.0 license
    Copyright (c) 2015 Datajin Technologies, Inc.
+
+ * github.com/mktmpio/go-mktmpio/stdcopy
+   Apache License 2.0
+   Copyright 2013-2016 Docker, Inc.
+
+ * github.com/urfave/cli
+   MIT license
+   Copyright (C) 2016 Jeremy Saenz & Contributors
 
  * golang.org/x/crypto/ssh/terminal
    golang.org/x/net/websocket
@@ -256,10 +256,6 @@ This binary includes 3rd party software:
  * gopkg.in/yaml.v2
    LGPL3 license
    Copyright (c) 2011-2014 - Canonical Inc.
-
- * github.com/Sirupsen/logrus
-   MIT License
-   Copyright (c) 2014 Simon Eskildsen
 `
 
 // This software is provided "AS IS"
