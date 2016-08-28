@@ -18,25 +18,32 @@ import (
 
 // ShellCommand defines the 'mktmpio shell' command
 var ShellCommand = cli.Command{
-	Name:   "shell",
-	Usage:  "create a new server and attach a shell session to it",
-	Action: shellAction,
+	Name:      "shell",
+	Usage:     "create a new server and attach a shell session to it",
+	Action:    shellAction,
+	Before:    shellCheckArgs,
+	ArgsUsage: "<type>",
+}
+
+func shellCheckArgs(c *cli.Context) error {
+	if c.NArg() != 1 {
+		return cli.NewExitError("missing <type> argument", 1)
+	}
+	return nil
 }
 
 // shellAction implements the 'mktmpio shell' command
-func shellAction(c *cli.Context) {
-	if len(c.Args()) < 1 {
-		cli.ShowAppHelp(c)
-		return
-	}
+func shellAction(c *cli.Context) error {
 	instance, err := client.Create(c.Args()[0])
-	if err != nil {
+	if err == nil {
+		fmt.Fprintf(os.Stderr, "Instance %s created.\n", instance.ID)
+	} else {
 		fmt.Fprintf(os.Stderr, "Error creating %s instance: %s\n", c.Args()[0], err)
-		return
+		return err
 	}
 	defer func() {
-		if err := instance.Destroy(); err != nil {
-			fmt.Fprintf(os.Stderr, "Error terminating %s instance %s: %v\n", instance.Type, instance.ID, err)
+		if terr := instance.Destroy(); terr != nil {
+			fmt.Fprintf(os.Stderr, "Error terminating %s instance %s: %v\n", instance.Type, instance.ID, terr)
 		} else {
 			fmt.Fprintf(os.Stderr, "Instance %s terminated.\n", instance.ID)
 		}
@@ -55,9 +62,12 @@ func shellAction(c *cli.Context) {
 		if err != nil {
 			fmt.Fprintf(os.Stderr, "Error running remote %s shell for %s: %v\n", instance.Type, instance.ID, err)
 		}
+	} else if len(instance.RemoteShell.Cmd) > 0 {
+		err = localShell(instance)
 	} else {
-		localShell(instance)
+		err = cli.NewExitError("Instance does not support a local or remote shell", 1)
 	}
+	return err
 }
 
 func localShell(instance *mktmpio.Instance) error {

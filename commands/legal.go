@@ -302,7 +302,7 @@ var LegalCommand = cli.Command{
 	},
 }
 
-func licenseAction(c *cli.Context) {
+func licenseAction(c *cli.Context) error {
 	license := artisticShort
 	thirdparty := thirdPartyShort
 	warranties := warrantiesShort
@@ -318,4 +318,5 @@ func licenseAction(c *cli.Context) {
 	c.App.Writer.Write([]byte("\nWARRANTIES:\n" + warranties))
 	c.App.Writer.Write([]byte("\n3RD PARTY SOFTWARE:\n" + thirdparty))
 	c.App.Writer.Write([]byte("\nCONTACT:\n" + contact))
+	return nil
 }

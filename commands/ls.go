@@ -43,14 +43,22 @@ var ListCommand = cli.Command{
 	Flags: []cli.Flag{
 		cli.BoolFlag{Name: "long, l"},
 	},
+	Before: lsCheckArgs,
+}
+
+func lsCheckArgs(c *cli.Context) error {
+	if c.NArg() != 0 {
+		return cli.NewExitError("unknown arguments", 1)
+	}
+	return nil
 }
 
 // shellAction implements the 'mktmpio shell' command
-func lsAction(c *cli.Context) {
+func lsAction(c *cli.Context) error {
 	instances, err := client.List()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error listing instance: %s\n", err)
-		return
+		return err
 	}
 	t := template.New("instance").Funcs(helpers)
 	if c.Bool("long") {
@@ -70,5 +78,5 @@ func lsAction(c *cli.Context) {
 			}
 		}
 	}
-	t.Execute(c.App.Writer, selected)
+	return t.Execute(c.App.Writer, selected)
 }

@@ -27,11 +27,12 @@ var ConfigCommand = cli.Command{
 			Usage:     "set config values",
 			ArgsUsage: "<NAME> <VALUE>..., to unset a value use an empty string as the value",
 			Action:    setConfigs,
+			Before:    setCheckArgs,
 		},
 	},
 }
 
-func getConfigs(c *cli.Context) {
+func getConfigs(c *cli.Context) error {
 	args := []string(c.Args())
 	for _, key := range args {
 		switch strings.ToLower(key) {
@@ -46,14 +47,19 @@ func getConfigs(c *cli.Context) {
 	if len(args) == 0 {
 		print(Config.String())
 	}
+	return nil
 }
 
-func setConfigs(c *cli.Context) {
-	args := []string(c.Args())
-	if len(args) == 0 || len(args)%2 != 0 {
-		println("invalid number of arguments:", c.Command.ArgsUsage)
-		return
+func setCheckArgs(c *cli.Context) error {
+	nargs := c.NArg()
+	if nargs == 0 || nargs%2 != 0 {
+		return cli.NewExitError("incorrect number of arguments", 1)
 	}
+	return nil
+}
+
+func setConfigs(c *cli.Context) error {
+	args := []string(c.Args())
 	for i := 0; i < len(args); i += 2 {
 		switch strings.ToLower(args[i]) {
 		case "token":
@@ -68,4 +74,5 @@ func setConfigs(c *cli.Context) {
 	if err != nil {
 		println("Error saving config:", err)
 	}
+	return err
 }
