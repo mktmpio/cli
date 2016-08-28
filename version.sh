@@ -23,6 +23,7 @@ shift $(($OPTIND - 1))
 # fi
 
 version=$(git describe --tags)
+version=${version#v}
 version=${version%%-*}
 
 # Build array from version string.
@@ -48,7 +49,7 @@ then
   ((a[2]++))
 fi
 
-next="${a[0]}.${a[1]}.${a[2]}"
+next="v${a[0]}.${a[1]}.${a[2]}"
 msg=${1:-$next}
 git tag -s -a "$next" -m "$msg"
 echo $next
