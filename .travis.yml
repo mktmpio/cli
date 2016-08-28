@@ -1,24 +1,27 @@
+sudo: false
 language: go
 go:
-- '1.7'
+  - '1.7'
 script:
-- make -j $(getconf _NPROCESSORS_ONLN) test
+  - echo "running $(getconf _NPROCESSORS_ONLN) jobs, woohoo!"
+  - make -j $(getconf _NPROCESSORS_ONLN) test
 before_deploy:
-- make -j $(getconf _NPROCESSORS_ONLN) release
+  - make -j $(getconf _NPROCESSORS_ONLN) release
 deploy:
   provider: releases
   api_key:
     secure: rJslgkQyH2aJDV31LiCdMle7h5FOukJja/gn0sDQnhLUffrC2Wc7ZGfZ6kTzCeZsBlAp38E2DFO/eQTcsLkh86nzbE1r31/J8Z86Ar7+dBnFMhEHIjMoomR7iPmNk7qGXyIPzBVOVjZqJpoJ1h7x4ncvw1IF3ryx/4MVzlb2gOs7Jx+n2Vydy7kYlK7el69vDbmftgS/lQaG9B31Xd/YvmQgig/unhvQBSyO7YFdBDPyzU0zCbTqwSlkwLaFhK3iDNWXuiwpf2a5FT8nJ+75oQkUpr1W5xF+VGIkKCXQDqHR4ljGs80bCN9OzjQ+Rww9GboXuMhqEdx12M7fnPnkImx8fEb/+I7BOxWA0kMH61CMjWKEbTl44SGaj42UnOXO5EL74NOT1MkmkAuqAZspyjRcpcfwDVjpQWdVtz1R0ZX+M/y0NyB8WswTJEIYYyO3h20JOLqzesgq65HLVLPceZy3tfMkck/7VMJlNFlypqelL2CRqX7YjwNTh+UT11pjy3zSbtq/JODdArkD1R2sw9bO1U2PnkK69RdpcDbORn2mYIRyGrOsaUgEVMOP+37pWPgNb4D7AvY/o1L/O9B8IXx8p185L3ler0SP3ZIYgQ3gVJHZVhI6Pp5INMF+v15IvEijCPVcPWmugshVNlaY6cD2++FVhGl4BQkD71bU7x0=
   file:
-  - mktmpio-v$TRAVIS_TAG-linux-x64.tgz
-  - mktmpio-v$TRAVIS_TAG-linux-x86.tgz
-  - mktmpio-v$TRAVIS_TAG-darwin-x64.tgz
-  - mktmpio-v$TRAVIS_TAG-darwin-x86.tgz
-  - mktmpio-v$TRAVIS_TAG-windows-x64.zip
-  - mktmpio-v$TRAVIS_TAG-windows-x86.zip
+    - mktmpio-v$TRAVIS_TAG-linux-x64.tgz
+    - mktmpio-v$TRAVIS_TAG-linux-x86.tgz
+    - mktmpio-v$TRAVIS_TAG-darwin-x64.tgz
+    - mktmpio-v$TRAVIS_TAG-darwin-x86.tgz
+    - mktmpio-v$TRAVIS_TAG-windows-x64.zip
+    - mktmpio-v$TRAVIS_TAG-windows-x86.zip
   on:
     tags: true
     repo: mktmpio/cli
+  skip_cleanup: true
 notifications:
   slack:
     secure: ln3YpUhEE2Lk4ff1jWm7VIyUHBbBCjEP/1bWBFcd4/QnjDCVDHZQAEanHAPMQCrQgdLc5OCewvecK1o+zRaox3aSHhK19FOE5LjrFEE6FwwjMRlATCeOcvt2mWA16e/LkSPWTQBOpzxOI17gdH40CignRoCNqepDj+ohp2fNqq99Ig+Du/UsKhf7D1dZF5poA1cXUYDx2Ctj51zaqRrokdsC1Rnn5zF/V+HYMcICZjO+ZfCJ8Gb3fZN6H29Z4L8oCcLlsX0YyQ17wtwv63ecVi+n8YIK3CN+KyBe7M8s8B0Bh7LJwPGho3Us3B3NTdvqM+HxUOhnSQtJUhcYvEFxUx4t97LDnqP7ZNeJyY8J3BYi1Q+KtUh9BV12xuLeBODPfGTHMy79dO9m/ZrGkfdH42l0+q4/q5H7j0gen032SxVW5YKCAHA1//iZKrYzEYGTGPbRBh85VxAgq6zDbb+py5jqjNsQVmfc95bRAnphB8KiFk7MOX+Xnul4XnpyOdu/tqwR26imjkd5dssJBUFB1H0Dg6rLYjOs4UuXPH1fhkqwYY4iwGNQnxnqh1VR9fGdy5lsvwxNMBOHW4Rzi01w3wJP8vbdSJhSOXJQ9HVdzAt01DPDx7LBT17P2jQ70p9C6vcyiN1ACr2IBo0m6I5EvAr9KtJPB28SB8wkE/wUnSc=
