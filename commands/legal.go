@@ -1,4 +1,4 @@
-// Copyright Datajin Technologies, Inc. 2015,2016. All rights reserved.
+// Copyright Datajin Technologies, Inc. 2015,2017. All rights reserved.
 // Use of this source code is governed by an Artistic-2
 // license that can be found in the LICENSE file.
 
@@ -7,7 +7,7 @@ package commands
 import "github.com/urfave/cli"
 
 const artisticShort = `
-Copyright Datajin Technologies, Inc. 2015,2016. All rights reserved.
+Copyright Datajin Technologies, Inc. 2015,2017. All rights reserved.
 This software is released under the Artistic License 2.0.
 `
 const artisticFull = `
