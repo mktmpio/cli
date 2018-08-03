@@ -4,6 +4,7 @@ vV := $(shell git describe --tags)
 V := $(vV:v%=%)
 T := $(shell date -u +%Y-%m-%dT%H:%M:%SZ)
 GOFLAGS += -ldflags "-X main.version=$V -X main.buildtime=$T"
+GO ?= go
 
 OSES ?= darwin linux windows
 darwin_ARCH := 386 amd64
@@ -41,23 +42,23 @@ test: Q =
 test: quicktest $(BINARIES)
 
 quicktest: cli
-	$Q go test ./commands && echo "ok - test"
+	$Q $(GO) test ./commands && echo "ok - test"
 	$Q ./cli help | grep -q "mktmpio" && echo "ok - help"
 	$Q ./cli legal | grep -q "Artistic" && echo "ok - legal"
 	$Q ./cli --version | grep -q "mktmpio" && echo "ok - version"
 	$Q echo "ok"
 
 get:
-	go get -t -v ./...
+	$(GO) get -t -v ./...
 
 cli: ${SRC}
-	$Q go build ${GOFLAGS}
+	$Q $(GO) build ${GOFLAGS}
 
 release: $(TARBALLS)
 
 # All binaries are built using the same recipe
 $(BINARIES): ${SRC}
-	GOOS=$(GOOS) GOARCH=$(GOARCH) go build -o $@ $(GOFLAGS) mktmpio.go
+	GOOS=$(GOOS) GOARCH=$(GOARCH) $(GO) build -o $@ $(GOFLAGS) ./cmd/mktmpio
 
 $(DIRS): README.md LICENSE
 	mkdir -p $@
