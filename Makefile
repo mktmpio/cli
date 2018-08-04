@@ -6,6 +6,8 @@ T := $(shell date -u +%Y-%m-%dT%H:%M:%SZ)
 GOFLAGS += -ldflags "-X main.version=$V -X main.buildtime=$T"
 GO ?= go
 
+export GO111MODULE = on
+
 OSES ?= darwin linux windows
 darwin_ARCH := 386 amd64
 linux_ARCH := 386 amd64

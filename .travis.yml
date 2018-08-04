@@ -2,9 +2,6 @@ sudo: false
 language: go
 go:
   - '1.11beta3'
-env:
-  global:
-  - "GO111MODULE=on"
 script:
   - echo "running $(getconf _NPROCESSORS_ONLN) jobs, woohoo!"
   - make -j $(getconf _NPROCESSORS_ONLN) test
