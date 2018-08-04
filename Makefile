@@ -48,9 +48,6 @@ quicktest: cli
 	$Q ./cli --version | grep -q "mktmpio" && echo "ok - version"
 	$Q echo "ok"
 
-get:
-	$(GO) get -t -v ./...
-
 cli: ${SRC}
 	$Q $(GO) build -o $@ ${GOFLAGS} ./cmd/mktmpio
 
