@@ -1,0 +1,13 @@
+# github.com/mitchellh/go-homedir v0.0.0-20160621174243-756f7b183b7a
+github.com/mitchellh/go-homedir
+# github.com/mktmpio/go-mktmpio v1.0.1
+github.com/mktmpio/go-mktmpio
+github.com/mktmpio/go-mktmpio/stdcopy
+# github.com/urfave/cli v0.0.0-20160724185324-e43a9fbf1eb1
+github.com/urfave/cli
+# golang.org/x/crypto v0.0.0-20160813211240-a548aac93ed4
+golang.org/x/crypto/ssh/terminal
+# golang.org/x/net v0.0.0-20160826235738-6250b4127982
+golang.org/x/net/websocket
+# gopkg.in/yaml.v2 v2.0.0-20160715033755-e4d366fc3c79
+gopkg.in/yaml.v2
