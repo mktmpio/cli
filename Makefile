@@ -52,13 +52,18 @@ get:
 	$(GO) get -t -v ./...
 
 cli: ${SRC}
-	$Q $(GO) build ${GOFLAGS}
+	$Q $(GO) build -o $@ ${GOFLAGS} ./cmd/mktmpio
 
 release: $(TARBALLS)
 
 # All binaries are built using the same recipe
 $(BINARIES): ${SRC}
 	GOOS=$(GOOS) GOARCH=$(GOARCH) $(GO) build -o $@ $(GOFLAGS) ./cmd/mktmpio
+
+# When doing a big parallel build ensure that cli finishes first so that we
+# don't have multiple 'go build' processes trying to fetch the same
+# dependencies at the same time and tripping over each other's lock files.
+$(BINARIES): | cli
 
 $(DIRS): README.md LICENSE
 	mkdir -p $@
